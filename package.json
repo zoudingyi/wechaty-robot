@@ -1,0 +1,28 @@
+{
+  "name": "wechaty-robot",
+  "version": "1.0.0",
+  "description": "基于 wechaty-puppet-padplus 的微信机器人助手",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "node ./src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zoudingyi/wechaty-robot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zoudingyi/wechaty-robot/issues"
+  },
+  "homepage": "https://github.com/zoudingyi/wechaty-robot#readme",
+  "dependencies": {
+    "qrcode-terminal": "^0.12.0",
+    "request": "^2.88.2",
+    "urlencode": "^1.1.0",
+    "wechaty": "^0.40.10",
+    "wechaty-puppet-padplus": "^0.6.3"
+  }
+}                                                              
