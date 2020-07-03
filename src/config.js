@@ -1,6 +1,6 @@
 module.exports = {
   // puppet_padplus Token
-  token: "你的token",
+  token: 'puppet_padplus_5703d8ae6c35c8da',
   // 你的机器人名字
   name: "远坂凛",
   // 房间/群聊
@@ -8,8 +8,8 @@ module.exports = {
     // 管理群组列表
     roomList: {
       // 群名字(用于发送群名字加群): 123456 (群id)
-      Web圈: "*****@chatroom",
-      xx群: "*****@chatroom"
+      // Web圈: "*****@chatroom",
+      // xx群: "*****@chatroom"
     },
     // 加入房间回复
     roomJoinReply: `你好，欢迎加入`

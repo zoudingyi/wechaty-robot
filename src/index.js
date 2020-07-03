@@ -9,8 +9,9 @@ const config = require("./config") // 配置文件
 const Qrterminal = require("qrcode-terminal")
 
 // const onRoomJoin = require("./onRoomJoin") // 加入房间监听回调
-const onRobotMessage = require("./onRobotMessage") // 带机器人的消息监听
+// const onRobotMessage = require("./onRobotMessage") // 带机器人的消息监听
 const onFriendShip = require("./onFriendShip") // 好友添加监听回调
+const onMyMessage = require("./onMyMessage")
 
 // 机器人需要扫描二维码时监听回调
 function onScan(qrcode, status) {
@@ -54,8 +55,9 @@ bot.on('login',   onLogin)
 bot.on('logout',  onLogout)
 // bot.on('message', onMessage)
 // bot.on("room-join", onRoomJoin) // 加入房间监听
-bot.on("message", onRobotMessage(bot)) // 带机器人的消息监听
+// bot.on("message", onRobotMessage(bot)) // 带机器人的消息监听
 bot.on("friendship", onFriendShip) // 好友添加监听
+bot.on('message', onMyMessage(bot))
 
 bot.start()
   .then(() => log.info('StarterBot', 'Starter Bot Started.'))
