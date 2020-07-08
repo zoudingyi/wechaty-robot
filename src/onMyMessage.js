@@ -3,14 +3,17 @@
  * @Author: zdy
  * @Date: 2020-07-03 15:45:42
  * @LastEditors: zdy
- * @LastEditTime: 2020-07-08 09:45:45
+ * @LastEditTime: 2020-07-08 17:09:10
  */ 
-const { Message } = require("wechaty")
+const { Message, UrlLink } = require("wechaty")
+const { FileBox } = require('file-box')
 
 let isAuto = true // 自动回复模式
-// const WeChatId = 'superegg177' //
-const WeChatId = 'wxid_h5s7aq81hp3e21' // 我的微信id
-
+// const WeChatId = 'wxid_h5s7aq81hp3e21' // 我的微信id
+const imgs = [
+  'http://59.110.223.199/img/Kumamon1.jpg',
+  'http://59.110.223.199/img/Kumamon2.jpg',
+]
 module.exports = bot => {
   return async function onMessage(msg) {
     logInfo(msg)
@@ -26,19 +29,38 @@ module.exports = bot => {
     }
     
     if (!isAuto) return
-    if (msg.from().id !== WeChatId) return
-    
-    // console.log('msg.type', msg.type(), Message.Type)
-    // const dateline = new Date(new Date(msg.date()).getTime())
-    // console.log('接受消息时间： ' + dateline, msg.age())
+    // if (msg.from().id !== WeChatId) return
     console.log('--查看类型--', msg.type(), Message.Type)
+    
+    const room = await msg.room() // 获取群聊
+    const atSelf = await msg.mentionSelf() // 是否提到自己
 
     switch (msg.type()) {
       // 普通文本消息
       case Message.Type.Text:
-        if (msg.text() == '宝宝') {
-          // await TimeLapse()
-          await msg.say('在呢')
+        // 群聊
+        if (room) {
+          // 收到消息，提到自己
+          if (atSelf) {
+            if (msg.text().includes('修改群名称')) {
+              const oldTopic = await room.topic() // 获取当前群名称
+              const name = msg.text().split('：')[1]
+              if (!name) return await room.say('好好打字，告诉爸爸改成什么？')
+              await room.topic(name) // 修改名称
+              await room.say(`群名称已从 ${oldTopic} 修改为 ${await room.topic()}`)
+              return
+            }
+            await room.say('叫爸爸干啥?')
+            return
+          }
+        } else {
+          if (msg.text() == '图片') {
+            const fileBox = FileBox.fromFile('img\\test.txt')
+            console.log(fileBox)
+            await msg.say(fileBox)
+            return
+          }
+          await msg.say('嘻嘻')
         }
         break;
       // 图片
@@ -61,24 +83,6 @@ module.exports = bot => {
       default:
         break;
     }
-
-    // if (msg.type() == Message.Type.Text) {
-    //   if (msg.room()) {
-    //     const room = await msg.room() // 获取群聊
-    //     // 收到消息，提到自己
-    //     if (await msg.mentionSelf()) {
-    //       // 获取提到自己的名字
-    //       const from = "@" + await msg.from().name()
-
-    //       // 返回消息，并@来自人
-    //       room.say(from + ' 干啥？')
-    //       return
-    //     }
-    //   } else {
-    //     await TimeLapse(1)
-    //     await msg.say('啥子？[捂脸]')
-    //   }
-    // }
   }
 }
 /**

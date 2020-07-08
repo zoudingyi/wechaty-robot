@@ -50,7 +50,7 @@ const bot = new Wechaty({
   name: config.name
 })
 
-bot.on("scan", onScan) // 机器人需要扫描二维码时监听
+bot.on("scan", './listeners/on-scan') // 机器人需要扫描二维码时监听
 bot.on('login',   onLogin)
 bot.on('logout',  onLogout)
 // bot.on('message', onMessage)
@@ -60,5 +60,9 @@ bot.on("friendship", onFriendShip) // 好友添加监听
 bot.on('message', onMyMessage(bot))
 
 bot.start()
-  .then(() => log.info('StarterBot', 'Starter Bot Started.'))
+  .then(() => {
+    log.info('StarterBot', 'Starter Bot Started.')
+  })
   .catch(e => log.error('StarterBot', e))
+
+

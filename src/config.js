@@ -8,8 +8,8 @@ module.exports = {
     // 管理群组列表
     roomList: {
       // 群名字(用于发送群名字加群): 123456 (群id)
-      // Web圈: "*****@chatroom",
-      // xx群: "*****@chatroom"
+      "wechaty-robot": "21676493228@chatroom",
+      "Tohsaka": "22887893475@chatroom"
     },  
     // 加入房间回复
     roomJoinReply: `你好，欢迎加入`
