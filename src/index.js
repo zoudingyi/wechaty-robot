@@ -1,48 +1,14 @@
-// const { Wechaty } = require("wechaty") // Wechaty核心包
-const {
-  Wechaty,
-  ScanStatus,
-  log,
-} = require('wechaty')
-const { PuppetPadplus } = require("wechaty-puppet-padplus") // padplus协议包
-const config = require("./config") // 配置文件
-const Qrterminal = require("qrcode-terminal")
+const { Wechaty, log } = require('wechaty')
+const { PuppetPadplus } = require('wechaty-puppet-padplus') // padplus协议包
+const config = require('./config')
 
-// const onRoomJoin = require("./onRoomJoin") // 加入房间监听回调
-// const onRobotMessage = require("./onRobotMessage") // 带机器人的消息监听
-const onFriendShip = require("./onFriendShip") // 好友添加监听回调
-const onMyMessage = require("./onMyMessage")
+const onScan = require('./listeners/on-scan')
+const onFriendShip = require('./listeners/on-friend') // 好友添加监听回调
+const onMessage = require('./listeners/on-message') // 消息监听
+const onRoomJoin = require('./listeners/on-room') // 加入房间监听回调
+// const onMyMessage = require('./listeners/on-MyMessage')
 
-// 机器人需要扫描二维码时监听回调
-function onScan(qrcode, status) {
-  // console.log('---ScanStatus---', ScanStatus )
-  if (status === ScanStatus.Waiting || status === ScanStatus.Timeout) {
-    Qrterminal.generate(qrcode, { small: true })
-    const qrcodeImageUrl = [
-      'https://wechaty.github.io/qrcode/',
-      encodeURIComponent(qrcode),
-    ].join('')
-
-    log.info('StarterBot', 'onScan: %s(%s) - %s', ScanStatus[status], status, qrcodeImageUrl)
-  } else {
-    log.info('StarterBot', 'onScan: %s(%s)', ScanStatus[status], status)
-  }
-}
-
-function onLogin (user) {
-  log.info('StarterBot', '%s login', user)
-}
-
-function onLogout (user) {
-  log.info('StarterBot', '%s logout', user)
-}
-
-// 消息监听
-async function onMessage (msg) {
-  log.info('StarterBot', msg.toString())
-}
-
-// 初始化
+// init
 const bot = new Wechaty({
   puppet: new PuppetPadplus({
     token: config.token
@@ -50,19 +16,17 @@ const bot = new Wechaty({
   name: config.name
 })
 
-bot.on("scan", './listeners/on-scan') // 机器人需要扫描二维码时监听
-bot.on('login',   onLogin)
-bot.on('logout',  onLogout)
-// bot.on('message', onMessage)
-// bot.on("room-join", onRoomJoin) // 加入房间监听
-// bot.on("message", onRobotMessage(bot)) // 带机器人的消息监听
-bot.on("friendship", onFriendShip) // 好友添加监听
-bot.on('message', onMyMessage(bot))
+bot.on('scan', onScan)
+bot.on('login', (user) => log.info('StarterBot', '%s login', user))
+bot.on('logout', (user) => log.info('StarterBot', '%s logout', user))
+bot.on('message', onMessage(bot))
+bot.on('friendship', onFriendShip)
+bot.on('room-join', onRoomJoin)
+// bot.on('message', onMyMessage(bot))
 
-bot.start()
+bot
+  .start()
   .then(() => {
     log.info('StarterBot', 'Starter Bot Started.')
   })
-  .catch(e => log.error('StarterBot', e))
-
-
+  .catch((e) => log.error('StarterBot', e))

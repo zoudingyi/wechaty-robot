@@ -1,26 +1,23 @@
-/**
- *   Wechaty - https://github.com/chatie/wechaty
- *
- *   @copyright 2016-2017 Huan LI <zixia@zixia.net>
- *
- *   Licensed under the Apache License, Version 2.0 (the "License");
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License.
- *
+/*
+ * @Description:扫描二维码时监听回调
+ * @Author: zdy
+ * @Date: 2020-07-08 17:15:11
+ * @LastEditors: zdy
+ * @LastEditTime: 2020-07-09 17:06:32
  */
-export default async function onScan (url, code) {
-  let loginUrl = url.replace('qrcode', 'l')
-  console.log(code, url)
+const { ScanStatus, log } = require('wechaty')
+const Qrterminal = require('qrcode-terminal')
 
-  if (code === 0) {
-    require('qrcode-terminal').generate(loginUrl)
+module.exports = async function onScan(qrcode, status) {
+  // console.log('---ScanStatus---', ScanStatus )
+  if (status === ScanStatus.Waiting || status === ScanStatus.Timeout) {
+    Qrterminal.generate(qrcode, { small: true })
+    const qrcodeImageUrl = ['https://wechaty.github.io/qrcode/', encodeURIComponent(qrcode)].join(
+      ''
+    )
+
+    log.info('StarterBot', 'onScan: %s(%s) - %s', ScanStatus[status], status, qrcodeImageUrl)
+  } else {
+    log.info('StarterBot', 'onScan: %s(%s)', ScanStatus[status], status)
   }
 }

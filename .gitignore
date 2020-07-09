@@ -2,7 +2,6 @@
 node_modules/
 package-lock.json
 *.memory-card.json
-token.js
 
 # Editor directories and files
 .idea
