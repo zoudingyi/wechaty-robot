@@ -1,9 +1,9 @@
 // 配置文件
 const config = require('../config')
 // 加入房间回复
-const roomJoinReply = config.room.roomJoinReply
+const { roomJoinReply } = config.room
 // 管理群组列表
-const roomList = config.room.roomList
+const { roomList } = config.room
 
 // 进入房间监听回调 room-群聊 inviteeList-受邀者名单 inviter-邀请者
 module.exports = async function onRoomJoin(room, inviteeList, inviter) {

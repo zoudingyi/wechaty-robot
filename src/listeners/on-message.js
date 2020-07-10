@@ -3,7 +3,7 @@
  * @Author: zdy
  * @Date: 2020-07-01 17:22:21
  * @LastEditors: zdy
- * @LastEditTime: 2020-07-09 18:06:35
+ * @LastEditTime: 2020-07-10 18:02:10
  */
 
 const { Message, UrlLink } = require('wechaty')
@@ -11,6 +11,7 @@ const config = require('../config')
 const { FileBox } = require('file-box')
 const name = config.name // 机器人名字
 const roomList = config.room.roomList // 管理群组列表
+const { businessCard } = config
 
 // 消息监听回调
 module.exports = (bot) => {
@@ -36,6 +37,17 @@ module.exports = (bot) => {
             await room.say(`群名称已从 ${oldTopic} 修改为 ${await room.topic()}`)
             return
           }
+          // @昵称 踢人
+          if (msg.text().includes('踢了')) {
+            const kick = msg.text().split('@')[2]
+            if (!kick) return await room.say('请用"踢了@要踢的人" 的形式告诉我')
+            const contact = await bot.Contact.find({ name: kick })
+            console.log(kick, contact)
+            if (!contact) return await room.say('没有找到该人')
+            await room.del(contact)
+            await room.say(`${kick} 已被移除群聊`)
+            return
+          }
           await room.say('叫我干啥？')
           return
         }
@@ -49,30 +61,29 @@ module.exports = (bot) => {
 
         // 发送图片
         if (msg.text() == '图片') {
-          const fileBox = FileBox.fromFile('../../img/Kumamon2.jpg')
+          const fileBox = FileBox.fromFile('img\\Kumamon2.jpg')
           await msg.say(fileBox)
         }
         // 发送文件
         if (msg.text() == '文件') {
-          const fileBox = FileBox.fromFile('../../img/text.txt')
+          const fileBox = FileBox.fromFile('img\\text.txt')
           await msg.say(fileBox)
         }
         // 发送链接
         if (msg.text() == '链接') {
           const urlLink = new UrlLink({
-            description:
-              'Wechaty is a Bot SDK for Wechat Individual Account which can help you create a bot in 6 lines of javascript.', // 链接描述
+            description: '双色球模拟器,可以模拟摇双色球的号码', // 链接描述
             thumbnailUrl: 'http://59.110.223.199/img/Kumamon1.jpg', // 链接图片地址
-            title: 'Wechaty',
-            url: 'https://github.com/chatie/wechaty'
+            title: 'double-color-ball-emulator',
+            url: 'http://59.110.223.199/'
           })
 
           await msg.say(urlLink)
         }
         // 发送名片
         if (msg.text() == '名片') {
-          // const contactCard = bot.Contact.load('contactId')
-          // await msg.say(contactCard)
+          const contactCard = bot.Contact.load(businessCard)
+          await msg.say(contactCard)
         }
       }
     } else {
