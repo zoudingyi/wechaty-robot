@@ -1,3 +1,11 @@
+/*
+ * @Description: 	好友确认，当对方发起好友请求的时候，先验证信息，然后再确认。
+ * @Author: zdy
+ * @Date: 2020-07-01 17:22:21
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-07-11 15:35:10
+ */
+
 const { Friendship } = require('wechaty')
 const config = require('../config')
 // 好友添加验证消息自动同意关键字数组
@@ -9,6 +17,7 @@ module.exports = async function onFriendShip(friendship) {
   try {
     logMsg = '添加好友' + friendship.contact().name()
     console.log(logMsg)
+    console.log(friendship.type())
     switch (friendship.type()) {
       /**
        * 1. 新的好友请求
@@ -21,16 +30,17 @@ module.exports = async function onFriendShip(friendship) {
           logMsg = `自动通过验证，因为验证消息是: "${friendship.hello()}"`
           // 通过验证
           await friendship.accept()
+          await friendship.contact().say('你好!新朋友！')
         } else {
           logMsg = `不自动通过，因为验证消息是: "${friendship.hello()}"`
         }
-        break
+        break  
 
       /**
        * 2. 友谊确认
        */
       case Friendship.Type.Confirm:
-        logMsg = 'friend ship confirmed with ' + friendship.contact().name()
+        logMsg = '已添加好友 ' + friendship.contact().name()
         break
     }
     console.log(logMsg)
@@ -38,3 +48,9 @@ module.exports = async function onFriendShip(friendship) {
     logMsg = e.message
   }
 }
+
+// Friendship.Type:
+// Unknown: 0,
+// Confirm: 1, 好友确认
+// Receive: 2, 对方发起添加好友请求
+// Verify: 3 机器人发起好友请求
