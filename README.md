@@ -88,4 +88,4 @@ npm run serve
 
 ### 效果图
 
-![效果图](img/chat.png)
+![效果图](./img/chat.png)
