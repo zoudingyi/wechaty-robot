@@ -19,12 +19,12 @@
 |-- img                     # 储项目所使用到的图片与其他相应资源。
 |-- src/
 |---- listeners/
-|------ on-scan.js		      # 机器人需要扫描二维码时监听回调
-|------ on-room.js 	        # 进入房间监听回调
-|------ on-message.js		    # 消息监听回调
-|------ on-friend.js	      # 好友添加监听回调
-|---- config.js		  	      # 配置文件
-|---- index.js				      # 入口文件
+|------ on-scan.js          # 机器人需要扫描二维码时监听回调
+|------ on-room.js          # 进入房间监听回调
+|------ on-message.js       # 消息监听回调
+|------ on-friend.js        # 好友添加监听回调
+|---- config.js             # 配置文件
+|---- index.js              # 入口文件
 |-- package.json
 ```
 
@@ -88,4 +88,4 @@ npm run serve
 
 ### 效果图
 
-![效果图](/img/chat.png)
+![效果图](img/chat.png)
