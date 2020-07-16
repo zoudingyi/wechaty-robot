@@ -3,7 +3,7 @@
  * @Author: zdy
  * @Date: 2020-07-03 15:45:42
  * @LastEditors: zdy
- * @LastEditTime: 2020-07-15 18:09:37
+ * @LastEditTime: 2020-07-16 10:17:20
  */
 
 const { Message } = require('wechaty')
@@ -47,14 +47,14 @@ module.exports = (bot) => {
           // if (msg.from().id == WeChatId) return
           const mssage = `${msg.from().name()}: ${msg.text()}`
           await myContact.say(mssage)
+          // await msg.say(msg.from().name())
+          // await msg.forward(myContact)
         }
         break
       // 图片
       case Message.Type.Image:
-        // console.log(msg.text())
-        // msg.text()
-        // const fileBox = FileBox.toUrl(msg.text())
-        // await myContact.say(mssage)
+        await msg.toFileBox()
+        // await myContact.say(fileBox)
         break
       // 语音
       case Message.Type.Video:
@@ -64,6 +64,11 @@ module.exports = (bot) => {
         break
       // 表情包
       case Message.Type.Emoticon:
+        break
+      // 获取撤回消息的文本内容
+      case Message.Type.Recalled:
+        const recalledMessage = await msg.toRecalled()
+        await myContact.say(`Message: ${recalledMessage} has been recalled.`)
         break
 
       default:
