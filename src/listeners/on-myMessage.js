@@ -3,18 +3,18 @@
  * @Author: zdy
  * @Date: 2020-07-03 15:45:42
  * @LastEditors: zdy
- * @LastEditTime: 2020-07-16 10:17:20
+ * @LastEditTime: 2020-07-23 17:54:31
  */
 
 const { Message } = require('wechaty')
-const { FileBox } = require('file-box')
+// const { FileBox } = require('file-box')
 
 let isAuto = true // 自动回复模式
-const myWeChat = 'wxid_h5s7aq81hp3e21' // 我的微信id
 
 module.exports = (bot) => {
   return async function onMessage(msg) {
     const myContact = await bot.Contact.find({ name: '孫悟空' })
+    const alias = (await msg.from().alias()) || (await msg.from().name()) // 获取对方的昵称
     logInfo(msg)
     // 判断自己的消息
     if (msg.self()) {
@@ -28,7 +28,7 @@ module.exports = (bot) => {
     }
 
     if (!isAuto) return
-    console.log('--查看类型--', msg.type(), Message.Type)
+    // console.log('--查看类型--', msg.type(), Message.Type)
 
     const room = await msg.room() // 获取群聊
     const atSelf = await msg.mentionSelf() // 是否提到自己
@@ -45,16 +45,15 @@ module.exports = (bot) => {
           }
         } else {
           // if (msg.from().id == WeChatId) return
-          const mssage = `${msg.from().name()}: ${msg.text()}`
+          const mssage = `[${alias}] ${msg.text()}`
           await myContact.say(mssage)
-          // await msg.say(msg.from().name())
-          // await msg.forward(myContact)
         }
         break
       // 图片
       case Message.Type.Image:
-        await msg.toFileBox()
-        // await myContact.say(fileBox)
+        const filebox = await msg.toFileBox()
+        await myContact.say(`${alias} [image]`)
+        await myContact.say(filebox)
         break
       // 语音
       case Message.Type.Video:
@@ -64,11 +63,29 @@ module.exports = (bot) => {
         break
       // 表情包
       case Message.Type.Emoticon:
+        // 转发forward和发送文件filebox是以文件的形式发送的 无法直接复原表情包
+        // await msg.forward(myContact)
+        // const emobox = await msg.toFileBox()
+        // await myContact.say(emobox)
+        await myContact.say(`${alias} [emoticon][unable to display]`)
         break
       // 获取撤回消息的文本内容
       case Message.Type.Recalled:
         const recalledMessage = await msg.toRecalled()
-        await myContact.say(`Message: ${recalledMessage} has been recalled.`)
+        const { payload } = recalledMessage
+        if (payload.type == 7) {
+          // 文本信息
+          await myContact.say(`${alias} withdrew a message: ${recalledMessage.payload.text}`)
+        }
+        if (payload.type == 6) {
+          // 图片
+          await myContact.say(`${alias} withdrew a picture`)
+          // await msg.forward(myContact) // 无法复现撤回的图片 只能复现一个文件
+        }
+        if (payload.type == 5) {
+          // 表情包
+          await myContact.say(`${alias} withdrew an emoticon`)
+        }
         break
 
       default:
@@ -84,7 +101,8 @@ module.exports = (bot) => {
  */
 function logInfo(msg) {
   console.log('=============================')
-  // console.log(`msg : ${msg}`)
+  console.log(`msg : ${msg}`)
+  console.log('=============================')
   console.log(
     `from: ${msg.from() ? msg.from().name() : null}: ${msg.from() ? msg.from().id : null}`
   )

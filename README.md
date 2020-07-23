@@ -30,7 +30,8 @@
 
 ### 依赖
 
-wechaty：wechaty 核心库<br />wechaty-puppet-padplus：wechaty 的 ipad 协议实现
+wechaty：wechaty 核心库  
+wechaty-puppet-padplus：wechaty 的 ipad 协议实现
 
 ### 代码介绍
 
@@ -82,10 +83,10 @@ npm run serve
 
 ### 使用
 
-修改`config`配置
-
-    打开`src/config.js` 文件，将里面的配置改为自己的。然后就可以运行了
+1. 打开`src/config.js` 文件
+2. 修改`config`配置
+3. 运行项目
 
 ### 效果图
 
-![效果图](./img/chat.png)
+![img](./img/chat.png)

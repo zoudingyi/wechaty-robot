@@ -4,9 +4,9 @@ const config = require('./config')
 
 const onScan = require('./listeners/on-scan')
 const onFriendShip = require('./listeners/on-friend') // 好友添加监听回调
-const onMessage = require('./listeners/on-message') // 消息监听
+// const onMessage = require('./listeners/on-message') // 消息监听
 const onRoomJoin = require('./listeners/on-room') // 加入房间监听回调
-// const onMyMessage = require('./listeners/on-MyMessage')
+const onMyMessage = require('./listeners/on-MyMessage')
 
 // init
 const bot = new Wechaty({
@@ -19,10 +19,10 @@ const bot = new Wechaty({
 bot.on('scan', onScan)
 bot.on('login', (user) => log.info('StarterBot', '%s login', user))
 bot.on('logout', (user) => log.info('StarterBot', '%s logout', user))
-bot.on('message', onMessage(bot))
+// bot.on('message', onMessage(bot))
 bot.on('friendship', onFriendShip)
 bot.on('room-join', onRoomJoin)
-// bot.on('message', onMyMessage(bot))
+bot.on('message', onMyMessage(bot))
 
 bot
   .start()
