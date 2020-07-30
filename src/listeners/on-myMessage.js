@@ -2,8 +2,8 @@
  * @Description: 	我的消息集中处理机制。所有发给机器人的消息 都通过机器人统一转发到我的号上，我可以通过引用该条消息回复给发消息的人。
  * @Author: zdy
  * @Date: 2020-07-03 15:45:42
- * @LastEditors: zdy
- * @LastEditTime: 2020-07-24 13:52:18
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-07-30 15:18:36
  */
 
 const { Message } = require('wechaty')
@@ -130,16 +130,38 @@ function logInfo(msg) {
  */
 async function replyMessage(bot, msg) {
   if (!isAuto) return
+  // const quoteMsg = msg.text()
+  // const start = quoteMsg.indexOf('[') + 1
+  // const stop = quoteMsg.indexOf(']')
+  // const SenderName = quoteMsg.substring(start, stop)
+  // console.log('└┅┅┅┅正在回复[', SenderName, ']┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┘')
+  // const Sender =
+  //   (await bot.Contact.find({ name: SenderName })) ||
+  //   (await bot.Contact.find({ alias: SenderName }))
+  // if (!Sender) return
+  // const infoStart = quoteMsg.indexOf('-') + 30
+  // const myMsg = quoteMsg.substring(infoStart, quoteMsg.length)
+  // await Sender.say(myMsg)
+  // ---老版本分割线---
+
+  // 2020年7月30日15:16:44 微信的系统消息变更 msg监听到xml 做出提取信息调整
   const quoteMsg = msg.text()
-  const start = quoteMsg.indexOf('[') + 1
-  const stop = quoteMsg.indexOf(']')
-  const SenderName = quoteMsg.substring(start, stop)
+  // 获取消息内容
+  const textStart = quoteMsg.indexOf('<title>') + 7
+  const textStop = quoteMsg.indexOf('</title>')
+  const text = quoteMsg.substring(textStart, textStop)
+  // 获取要发送的人
+  const extractStart = quoteMsg.indexOf('<content>') + 9
+  const extractStop = quoteMsg.indexOf('</content>')
+  const extract = quoteMsg.substring(extractStart, extractStop)
+  const start = extract.indexOf('[') + 1
+  const stop = extract.indexOf(']')
+  const SenderName = extract.substring(start, stop)
+  console.log('└┅┅┅┅回复内容：', text)
   console.log('└┅┅┅┅正在回复[', SenderName, ']┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┘')
   const Sender =
     (await bot.Contact.find({ name: SenderName })) ||
     (await bot.Contact.find({ alias: SenderName }))
   if (!Sender) return
-  const infoStart = quoteMsg.indexOf('-') + 30
-  const myMsg = quoteMsg.substring(infoStart, quoteMsg.length)
-  await Sender.say(myMsg)
+  await Sender.say(text)
 }
