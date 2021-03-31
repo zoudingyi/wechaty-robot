@@ -10,14 +10,11 @@ const Qrterminal = require('qrcode-terminal')
 
 module.exports = async function onScan(qrcode, status) {
   // console.log('---ScanStatus---', ScanStatus )
-  if (status === ScanStatus.Waiting || status === ScanStatus.Timeout) {
+  if (status === ScanStatus.Waiting && qrcode) {
     Qrterminal.generate(qrcode, { small: true })
-    const qrcodeImageUrl = ['https://wechaty.github.io/qrcode/', encodeURIComponent(qrcode)].join(
-      ''
-    )
-
-    log.info('StarterBot', 'onScan: %s(%s) - %s', ScanStatus[status], status, qrcodeImageUrl)
+    const qrcodeImageUrl = ["https://api.qrserver.com/v1/create-qr-code/?data=", encodeURIComponent(qrcode)].join("");
+    console.log(`onScan: ${ScanStatus[status]}(${status}) - ${qrcodeImageUrl}`);
   } else {
-    log.info('StarterBot', 'onScan: %s(%s)', ScanStatus[status], status)
+    console.log(`onScan: ${ScanStatus[status]}(${status})`);
   }
 }

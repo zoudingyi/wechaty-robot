@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/zoudingyi/wechaty-robot#readme",
   "dependencies": {
-    "file-box": "^0.12.8",
+    "file-box": "^0.16.8",
     "qrcode-terminal": "^0.12.0",
     "request": "^2.88.2",
     "urlencode": "^1.1.0",
