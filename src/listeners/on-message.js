@@ -3,7 +3,7 @@
  * @Author: zdy
  * @Date: 2020-07-01 17:22:21
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-07-12 01:30:29
+ * @LastEditTime: 2021-04-05 19:00:13
  */
 
 const { Message, UrlLink } = require('wechaty')
@@ -136,13 +136,13 @@ async function isRoomName(bot, msg) {
     const room = await bot.Room.find({ id: roomList[msg.text()] })
 
     // 判断是否在房间中 在-提示并结束
-    if (await room.has(msg.from())) {
+    if (await room.has(msg.talker())) {
       await msg.say('您已经在房间中了')
       return true
     }
 
     // 发送群邀请
-    await room.add(msg.from())
+    await room.add(msg.talker())
     await msg.say('已发送群邀请')
     return true
   }
@@ -159,7 +159,7 @@ function logInfo(msg) {
   console.log('=============================')
   // console.log(`msg : ${msg}`)
   console.log(
-    `from: ${msg.from() ? msg.from().name() : null}: ${msg.from() ? msg.from().id : null}`
+    `from: ${msg.talker() ? msg.talker().name() : null}: ${msg.talker() ? msg.talker().id : null}`
   )
   console.log(`to: ${msg.to().name()}`)
   console.log(`text: ${msg.text()}`)

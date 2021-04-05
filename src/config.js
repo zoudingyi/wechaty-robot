@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-19 10:14:34
- * @LastEditTime: 2021-04-05 14:40:13
+ * @LastEditTime: 2021-04-05 20:08:19
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wechaty-robot\src\config.js

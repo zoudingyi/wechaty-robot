@@ -2,8 +2,8 @@
  * @Description: 	我的消息集中处理机制。所有发给机器人的消息 都通过机器人统一转发到我的号上，我可以通过引用该条消息回复给发消息的人。
  * @Author: zdy
  * @Date: 2020-07-03 15:45:42
- * @LastEditors: zdy
- * @LastEditTime: 2020-07-24 13:52:18
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-04-05 18:54:48
  */
 
 const { Message } = require('wechaty')
@@ -37,21 +37,21 @@ module.exports = (bot) => {
     }
 
     if (isAutoMsg) {
+        // 群聊
+        if (room) {
+          // 收到群聊，@自己回复，其他暂时不做处理
+          if (atSelf) {
+            return await room.say('叫爸爸干啥?')
+          }
+          return;
+        }
         // 消息类型集中处理 转发有效消息给我
         switch (msg.type()) {
           // 普通文本消息
           case Message.Type.Text:
             logInfo(msg)
-            // 群聊
-            if (room) {
-              // 收到消息，提到自己
-              if (atSelf) {
-                return await room.say('叫爸爸干啥?')
-              }
-            } else {
-              const mssage = `[${alias}]：${msg.text()}`
-              await Master.say(mssage)
-            }
+            const mssage = `[${alias}]：${msg.text()}`
+            await Master.say(mssage)
             break
           // 图片
           case Message.Type.Image:

@@ -9,9 +9,7 @@ const onMessage = require('./listeners/on-message') // 消息监听
 const onRoomJoin = require('./listeners/on-room') // 加入房间监听回调
 // const onMyMessage = require('./listeners/on-myMessage')
 
-
 // init
-const puppet = new PuppetPadlocal({ token: config.token })
 const bot = new Wechaty({
   puppet: new PuppetPadlocal({
     token: config.token

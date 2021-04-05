@@ -3,7 +3,7 @@
  * @Author: zdy
  * @Date: 2020-07-01 17:22:21
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-07-11 15:35:10
+ * @LastEditTime: 2021-04-05 18:49:20
  */
 
 const { Friendship } = require('wechaty')
@@ -30,7 +30,18 @@ module.exports = async function onFriendShip(friendship) {
           logMsg = `自动通过验证，因为验证消息是: "${friendship.hello()}"`
           // 通过验证
           await friendship.accept()
-          await friendship.contact().say('你好!新朋友！')
+          await friendship.contact().say(`
+            欢迎光临小芒的鞋铺～
+            店主超nice 可闲聊(⁎⁍̴̛ᴗ⁍̴̛⁎)
+            购物🛒可翻阅朋友圈或直接带款式询价哦
+
+            只做顶级版本
+            坚决不碰垃圾货❗️
+            全场包邮 支持7天无理由退换✔️
+
+            想要几十一百的次品 请绕道 谢谢哦～
+            欢迎有礼貌的小可爱来到我的店里
+          `)
         } else {
           logMsg = `不自动通过，因为验证消息是: "${friendship.hello()}"`
         }
@@ -41,6 +52,18 @@ module.exports = async function onFriendShip(friendship) {
        */
       case Friendship.Type.Confirm:
         logMsg = '已添加好友 ' + friendship.contact().name()
+        await friendship.contact().say(`
+            欢迎光临小芒的鞋铺～
+            店主超nice 可闲聊(⁎⁍̴̛ᴗ⁍̴̛⁎)
+            购物🛒可翻阅朋友圈或直接带款式询价哦
+
+            只做顶级版本
+            坚决不碰垃圾货❗️
+            全场包邮 支持7天无理由退换✔️
+
+            想要几十一百的次品 请绕道 谢谢哦～
+            欢迎有礼貌的小可爱来到我的店里
+          `)
         break
     }
     console.log(logMsg)
