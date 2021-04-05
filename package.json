@@ -19,11 +19,12 @@
   },
   "homepage": "https://github.com/zoudingyi/wechaty-robot#readme",
   "dependencies": {
-    "file-box": "^0.12.8",
+    "file-box": "^0.16.8",
     "qrcode-terminal": "^0.12.0",
     "request": "^2.88.2",
     "urlencode": "^1.1.0",
-    "wechaty": "^0.40.10",
-    "wechaty-puppet-padplus": "^0.6.3"
+    "wechaty": "^0.56.6",
+    "wechaty-puppet": "^0.34.1",
+    "wechaty-puppet-padlocal": "^0.2.33"
   }
 }

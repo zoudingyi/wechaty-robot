@@ -1,19 +1,21 @@
 const { Wechaty, log } = require('wechaty')
-const { PuppetPadplus } = require('wechaty-puppet-padplus') // padplus协议包
-const config = require('./config')
+// import { PuppetPadlocal } from "wechaty-puppet-padlocal";
+// import {Contact, Message, ScanStatus, Wechaty} from "wechaty";
+const { PuppetPadlocal } = require('wechaty-puppet-padlocal')
 
+const config = require('./config')
 const onScan = require('./listeners/on-scan')
 const onFriendShip = require('./listeners/on-friend') // 好友添加监听回调
 // const onMessage = require('./listeners/on-message') // 消息监听
 const onRoomJoin = require('./listeners/on-room') // 加入房间监听回调
 const onMyMessage = require('./listeners/on-MyMessage')
 
+
 // init
+const puppet = new PuppetPadlocal({ token: config.token })
 const bot = new Wechaty({
-  puppet: new PuppetPadplus({
-    token: config.token
-  }),
-  name: config.name
+  name: config.name,
+  puppet,
 })
 
 bot.on('scan', onScan)

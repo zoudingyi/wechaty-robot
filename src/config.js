@@ -1,6 +1,14 @@
+/*
+ * @Author: your name
+ * @Date: 2020-07-19 10:14:34
+ * @LastEditTime: 2020-07-23 19:35:00
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \wechaty-robot\src\config.js
+ */ 
 module.exports = {
   // puppet_padplus Token
-  token: '你的token',
+  token: 'puppet_padplus_8626fc2bfeed57e7',
   // 你的机器人名字
   name: '远坂凛',
   // 房间/群聊
