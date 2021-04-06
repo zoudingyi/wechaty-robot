@@ -38,7 +38,7 @@ module.exports = (bot) => {
           }
           // @昵称 踢人
           if (msg.text().includes('踢了')) {
-            const kick = msg.text().split('@')[2].replace(/\s+/g,"")
+            const kick = msg.text().split('@')[2].replace(/\s+/g, '')
             if (!kick) return await room.say('请用"踢了@要踢的人" 的形式告诉我')
             const contact = await bot.Contact.find({ name: kick })
             if (!contact) return await room.say('没有找到该人')
@@ -72,12 +72,12 @@ module.exports = (bot) => {
             // const imgBox = FileBox.fromUrl('https://wechaty.github.io/wechaty/images/bot-qr-code.png')
             const imgBox = FileBox.fromFile('img/Kumamon2.jpg')
             await msg.say(imgBox)
-            break;
+            break
 
           case '文件':
             const fileBox = FileBox.fromFile('img/text.txt')
             await msg.say(fileBox)
-            break;
+            break
 
           case '链接':
             const urlLink = new UrlLink({
@@ -87,28 +87,32 @@ module.exports = (bot) => {
               url: 'http://59.110.223.199/'
             })
             await msg.say(urlLink)
-            break;
+            break
 
           case '名片':
             const contactCard = bot.Contact.load(businessCard)
             await msg.say(contactCard)
-            break;
+            break
+
+          case '退出':
+            await bot.logout()
+            break
 
           case '小程序':
             // 6. send MiniProgram to bot itself
-            const miniPayload = new MiniProgram ({
-              username           : 'gh_xxxxxxx',     //get from mp.weixin.qq.com
-              appid              : '',               //optional, get from mp.weixin.qq.com
-              title              : '',               //optional
-              pagepath           : '',               //optional
-              description        : '',               //optional
-              thumbnailurl       : '',               //optional
+            const miniPayload = new MiniProgram({
+              username: 'gh_xxxxxxx', //get from mp.weixin.qq.com
+              appid: '', //optional, get from mp.weixin.qq.com
+              title: '', //optional
+              pagepath: '', //optional
+              description: '', //optional
+              thumbnailurl: '' //optional
             })
             await msg.say(miniPayload)
-            break;
-        
+            break
+
           default:
-            break;
+            break
         }
       }
     } else {

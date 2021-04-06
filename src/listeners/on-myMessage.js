@@ -25,10 +25,12 @@ module.exports = (bot) => {
     if (msg.talker().id === businessCard) {
       // 开启/关闭 消息转发功能
       if (msg.text() === '0') {
+        // return await bot.stop()
         isAutoMsg = false
         return await Master.say('Closed Success')
       }
       if (msg.text() === '1') {
+        // return await bot.start()
         isAutoMsg = true
         return await Master.say('Opened Success')
       }
