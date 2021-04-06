@@ -6,9 +6,8 @@
  * @LastEditTime: 2021-04-05 19:00:13
  */
 
-const { Message, UrlLink } = require('wechaty')
+const { Message, UrlLink, FileBox } = require('wechaty')
 const config = require('../config')
-const { FileBox } = require('file-box')
 const name = config.name // 机器人名字
 const roomList = config.room.roomList // 管理群组列表
 const { businessCard } = config
@@ -70,13 +69,14 @@ module.exports = (bot) => {
         // 发送图片、文件、链接、名片
         switch (msg.text()) {
           case '图片':
-            const fileBox1 = FileBox.fromFile('img\\Kumamon2.jpg')
-            await msg.say(fileBox1)
-            break;1
+            // const fileBox = FileBox.fromUrl('https://wechaty.github.io/wechaty/images/bot-qr-code.png')
+            const fileBox = FileBox.fromFile('img/Kumamon2.jpg')
+            await msg.say(fileBox)
+            break;
 
           case '文件':
-            const fileBox2 = FileBox.fromFile('img\\text.txt')
-            await msg.say(fileBox2)
+            const fileBox = FileBox.fromFile('img/text.txt')
+            await msg.say(fileBox)
             break;
 
           case '链接':
@@ -92,6 +92,19 @@ module.exports = (bot) => {
           case '名片':
             const contactCard = bot.Contact.load(businessCard)
             await msg.say(contactCard)
+            break;
+
+          case '小程序':
+            // 6. send MiniProgram to bot itself
+            const miniPayload = new MiniProgram ({
+              username           : 'gh_xxxxxxx',     //get from mp.weixin.qq.com
+              appid              : '',               //optional, get from mp.weixin.qq.com
+              title              : '',               //optional
+              pagepath           : '',               //optional
+              description        : '',               //optional
+              thumbnailurl       : '',               //optional
+            })
+            await msg.say(miniPayload)
             break;
         
           default:

@@ -1,5 +1,4 @@
-const { Message, UrlLink } = require('wechaty')
-const config = require('../config')
+const { Message } = require('wechaty')
 
 // 消息监听回调
 module.exports = (bot) => {
