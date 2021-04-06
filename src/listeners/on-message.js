@@ -69,9 +69,9 @@ module.exports = (bot) => {
         // 发送图片、文件、链接、名片
         switch (msg.text()) {
           case '图片':
-            // const fileBox = FileBox.fromUrl('https://wechaty.github.io/wechaty/images/bot-qr-code.png')
-            const fileBox = FileBox.fromFile('img/Kumamon2.jpg')
-            await msg.say(fileBox)
+            // const imgBox = FileBox.fromUrl('https://wechaty.github.io/wechaty/images/bot-qr-code.png')
+            const imgBox = FileBox.fromFile('img/Kumamon2.jpg')
+            await msg.say(imgBox)
             break;
 
           case '文件':
