@@ -52,18 +52,6 @@ module.exports = async function onFriendShip(friendship) {
        */
       case Friendship.Type.Confirm:
         logMsg = '已添加好友 ' + friendship.contact().name()
-        await friendship.contact().say(`
-            欢迎光临小芒的鞋铺～
-            店主超nice 可闲聊(⁎⁍̴̛ᴗ⁍̴̛⁎)
-            购物🛒可翻阅朋友圈或直接带款式询价哦
-
-            只做顶级版本
-            坚决不碰垃圾货❗️
-            全场包邮 支持7天无理由退换✔️
-
-            想要几十一百的次品 请绕道 谢谢哦～
-            欢迎有礼貌的小可爱来到我的店里
-          `)
         break
     }
     console.log(logMsg)

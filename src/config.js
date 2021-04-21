@@ -7,20 +7,21 @@
  * @FilePath: \wechaty-robot\src\config.js
  */ 
 module.exports = {
-  // puppet_padplus Token
+  // puppet_padlocal Token
   token: '',
   // 你的机器人名字
-  name: '远坂凛',
+  name: '悟空',
   // 房间/群聊
   room: {
     // 管理群组列表
     roomList: {
       // 群名字(用于发送群名字加群): 123456 (群id)
       'wechaty-robot': '21676493228@chatroom',
-      Tohsaka: '22887893475@chatroom'
+      'test-robot': '22887893475@chatroom',
+      '微信机器人': '24661539197@chatroom',
     },
     // 加入房间回复
-    roomJoinReply: `你好，欢迎加入`
+    roomJoinReply: '欢迎新人'
   },
   // 私人
   personal: {
