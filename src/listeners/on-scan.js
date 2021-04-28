@@ -18,3 +18,7 @@ module.exports = async function onScan(qrcode, status) {
     console.log(`onScan: ${ScanStatus[status]}(${status})`);
   }
 }
+
+// onScan: Waiting(2) 等待确认登录
+// onScan: Scanned(3) 扫描结束
+// onScan: Cancel(1) 取消登录

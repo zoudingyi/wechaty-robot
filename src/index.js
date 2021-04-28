@@ -2,7 +2,6 @@ const { Wechaty, log } = require('wechaty')
 const { PuppetPadlocal } = require('wechaty-puppet-padlocal') // padlocal协议包
 const config = require('./config')
 
-const config = require('./config')
 const onScan = require('./listeners/on-scan')
 const onFriendShip = require('./listeners/on-friend') // 好友添加监听回调
 const onMessage = require('./listeners/on-message') // 消息监听
